@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Preschool Quiz — Login + Class Quizzes</title>
+ <link rel="stylesheet" type="text/css" href="quiz.css">
+ <link href="https://fonts.googleapis.com/css2?family=Bubblegum+Sans&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="wrap">
+
+    <!-- BRAND -->
+    <div class="brand">
+      <div class="logo" aria-hidden="true">
+  <img src="mercy.jpg" alt="MMS Logo">
+</div>
+      <h1>MercyCourt Monchool — Online Quiz</h1>
+    </div>
+
+    <!-- LOGIN PAGE -->
+    <section id="loginPage" class="card">
+      <div class="login-grid">
+        <div class="welcomeBox">
+          <h2>👋 Welcome, Super Learner 🎈</h2>
+          <p>Please log in with your details and the school password.</p>
+          <ul>
+  <li style="margin-bottom: 20px; font-weight:bold;"> 📚 Find a quiet spot and sit comfortably.</li>
+  <li style="margin-bottom: 20px;font-weight:bold;"> 👀 Read each question carefully.</li>
+  <li style="font-weight:bold;"> 🔗 You can jump to any question by tapping its number.</li>
+</ul>
+        </div>
+
+        <form id="loginForm" autocomplete="off" style="padding:4px;display:flex;flex-direction:column;gap:8px">
+          <div class="form-row">
+            <label style="font-family: 'Bubblegum Sans', cursive;" for="pName">Pupil’s Name</label>
+            <input id="pName" placeholder="Your name here" required />
+          </div>
+          
+  
+
+          <div class="form-row">
+              <label style="font-family: 'Bubblegum Sans', cursive;" for="pTerm">Select Term:</label>
+              <select id="pTerm" required>
+             <option style="font-family: 'Bubblegum Sans', cursive;" value=""> Select Term </option>
+             <option style="font-family: 'Bubblegum Sans', cursive;" value="1st">1st Term</option>
+               <option style="font-family: 'Bubblegum Sans', cursive;" value="2nd">2nd Term</option>
+                  <option style="font-family: 'Bubblegum Sans', cursive;" value="3rd">3rd Term</option>
+                       </select>
+            <label style="font-family: 'Bubblegum Sans', cursive;" for="pClass">Class</label>
+            <select id="pClass" required>
+              <option style="font-family: 'Bubblegum Sans', cursive;" value="">Select class</option>
+              <option style="font-family: 'Bubblegum Sans', cursive;">Grade 1</option>
+              <option style="font-family: 'Bubblegum Sans', cursive;">Grade 2</option>
+              <option style="font-family: 'Bubblegum Sans', cursive;">Grade 3</option>
+              <option style="font-family: 'Bubblegum Sans', cursive;">Grade 4</option>
+              <option style="font-family: 'Bubblegum Sans', cursive;">Grade 5</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <label style="font-family: 'Bubblegum Sans', cursive;" for="pExam">Exam Number</label>
+            <input id="pExam" placeholder="type here" required />
+          </div>
+          <div class="form-row">
+  <label style="font-family: 'Bubblegum Sans', cursive;" for="pPass">Password (School)</label>
+  <div class="password-wrapper">
+    <input id="pPass" name="studentpass" type="password" placeholder="Enter school password" autocomplete="new-password" required />
+    <button type="button" class="toggle-password" onclick="togglePassword('pPass', this)">
+      👁️
+    </button>
+  </div>
+  <div class="muted">This is a single unique password managed by the school.</div>
+</div>
+          <div style="display:flex;gap:10px;align-items:center;margin-top:4px">
+  <button class="btn" type="submit">Login</button>
+  <button class="btn ghost" type="button" onclick="goToAdmin()">🔐 Admin Only</button>
+</div>
+        </form>
+      </div>
+    </section>
+
+    <!-- PREPARATION PAGE -->
+    <section id="prepPage" class="card">
+      <div class="prep">
+        <h2>Welcome <span style="color:orange;" id="uName">-</span> 🌟</h2>
+        <p><b style="font-family: 'Bubblegum Sans', cursive;">Class:</b> <span id="uClass">-</span> · <b style="font-family: 'Bubblegum Sans', cursive;">Exam No.:</b> <span id="uExam">-</span></p>
+        <p>Get ready to have fun while you learn!</p>
+        <ul>
+          <li style="margin-bottom: 20px; font-weight:bold;">Answer every question. You can always go back.</li>
+          <li style="margin-bottom: 20px; font-weight:bold;">Watch the timer at the top.</li>
+          <li style="margin-bottom: 20px; font-weight:bold;">When you finish, click <b>Submit</b> to see your score.</li>
+        </ul>
+        <div class="actions" style="display:flex;gap:10px;margin-top:10px">
+          <button id="startQuizBtn" class="btn">Start Quiz</button>
+          <button id="backToLoginBtn" class="btn ghost">Back</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- QUIZ PAGE -->
+    <section id="quizPage" class="card">
+      <div class="quiz-header">
+        <div class="topic" id="topicTitle"> Topic:<span> -</div>
+        <div class="meta">
+          <span class="badge">Questions: <b style="color:orange"id="countBadge">0/0</b></span>
+          <span class="badge">Time Left: <b style="color:orange" id="timeLeft">--:--</b></span>
+        </div>
+      </div>
+      <div class="progress"><span id="progressBar"></span></div>
+
+      <div class="quiz-body">
+        <aside class="nav">
+          <h3 style="margin-top:0;font-family: 'Bubblegum Sans', cursive;">Go to Question</h3>
+          <div class="qnums" id="qnums" tabindex="0"></div>
+        </aside>
+ 
+        <main>
+          <div id="questionContainer"></div>
+          <div class="controls">
+            <button class="btn ghost" id="prevBtn" type="button">◀ Previous</button>
+            <button class="btn ghost" id="nextBtn" type="button">Next ▶</button>
+            <button class="btn" id="submitBtn" type="button" style="background:var(--warn)">Submit Quiz</button>
+          </div>
+        </main>
+      </div>
+    </section>
+
+    <!-- RESULT PAGE -->
+    <section id="resultPage" class="card">
+      <h2 style="font-family: 'Bubblegum Sans', cursive;">🎉 GST RESULT</h2>
+      <div class="sheet">
+        <div class="sheet-row"><b>Name:</b> <span id="rName">-</span></div>
+        <div class="sheet-row"><b>Class:</b> <span id="rClass">-</span></div>
+        <div class="sheet-row"><b>Exam No.:</b> <span id="rExam">-</span></div>
+        <div class="sheet-row"><b>Topic:</b> <span id="rTopic">-</span></div>
+        <div class="sheet-row"><b>Date:</b> <span id="rDate">-</span></div>
+        <div class="sheet-row"><b>Score:</b> <span class="score-big" id="rScore">0 / 0 (0%)</span></div>
+      </div>
+      <div style="display:flex;gap:10px;margin-top:12px">
+        <button id="printBtn" class="btn">Download / Print Result (PDF)</button>
+        <button id="restartBtn" class="btn ghost">Restart</button>
+      </div>
+    </section>
+
+  </div>
+  <script src="shared.js"></script>
+<script type="module" src="quiz.js"></script>
+</body>
+
+</html>
